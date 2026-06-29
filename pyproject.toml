@@ -1,0 +1,16 @@
+[build-system]
+requires = ["setuptools>=68"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "market-data-rate-limit-monitor"
+version = "0.1.0"
+description = "API-agnostic rate-limit monitoring for market-data clients"
+readme = "README.md"
+requires-python = ">=3.10"
+dependencies = [
+    "requests>=2.31.0",
+]
+
+[tool.setuptools.packages.find]
+include = ["rate_limit_monitor*"]
