@@ -57,17 +57,45 @@ Default header names include `X-RateLimit-Remaining`, `X-RateLimit-Limit`,
 
 ## Alpha Vantage Example
 
-```bash
-set ALPHA_VANTAGE_API_KEY=your_api_key_here
-python -m examples.alpha_vantage_example
+PowerShell:
+
+```powershell
+$env:ALPHA_VANTAGE_API_KEY="your_api_key_here"
+python examples/alpha_vantage_example.py
 ```
 
 On macOS/Linux:
 
 ```bash
 export ALPHA_VANTAGE_API_KEY=your_api_key_here
-python -m examples.alpha_vantage_example
+python examples/alpha_vantage_example.py
 ```
 
 The example uses Alpha Vantage's public market-data endpoint and common free-tier
 style limits: 5 requests per minute and 500 requests per day.
+
+## Polygon Example
+
+PowerShell:
+
+```powershell
+$env:POLYGON_API_KEY="your_api_key_here"
+python examples/polygon_example.py
+```
+
+You can also use `MASSIVE_API_KEY` for the same example if your account labels
+the key that way. The API key is read from the environment and is never stored in
+source code.
+
+## Yahoo Finance Example
+
+Yahoo Finance does not require an API key for this example:
+
+```bash
+python examples/yahoo_finance_example.py
+```
+
+The Yahoo example uses Yahoo's public chart endpoint through
+`HttpRateLimitedClient`. Because Yahoo does not expose quota headers for this
+request in the same way some API products do, the example uses the monitor's
+internal counters.

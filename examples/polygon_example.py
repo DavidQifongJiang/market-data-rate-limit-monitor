@@ -8,23 +8,23 @@ from rate_limit_monitor import HttpRateLimitedClient, RateLimitConfig, RateLimit
 
 
 def main() -> None:
-    api_key = os.getenv("ALPHA_VANTAGE_API_KEY")
+    api_key = os.getenv("POLYGON_API_KEY") or os.getenv("MASSIVE_API_KEY")
     if not api_key:
-        raise SystemExit("Set ALPHA_VANTAGE_API_KEY before running this example.")
+        raise SystemExit("Set POLYGON_API_KEY or MASSIVE_API_KEY before running this example.")
 
     config = RateLimitConfig(
-        provider_name="Alpha Vantage",
+        provider_name="Polygon",
         per_minute_limit=5,
         per_day_limit=500,
     )
     client = HttpRateLimitedClient(RateLimitMonitor(config))
 
     response = client.get(
-        "https://www.alphavantage.co/query",
+        "https://api.polygon.io/v2/aggs/ticker/IBM/range/1/day/2026-06-01/2026-06-05",
         params={
-            "function": "TIME_SERIES_DAILY",
-            "symbol": "IBM",
-            "apikey": api_key,
+            "adjusted": "true",
+            "sort": "asc",
+            "apiKey": api_key,
         },
         timeout=15,
     )
