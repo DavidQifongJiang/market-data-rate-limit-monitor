@@ -67,7 +67,6 @@ transparent, easy to test, and directly match the requirement to track request
 volume per minute and per day. 
 
 Common rate-limit algorithm tradeoffs:
-
 - Token bucket: allows short bursts while enforcing an average request rate, but
   needs token refill logic and does not directly model daily quotas on its own.
 - Leaky bucket: smooths traffic into a steady output rate, but can delay
