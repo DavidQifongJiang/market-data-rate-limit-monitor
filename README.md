@@ -65,6 +65,7 @@ This design was chosen because the target public market data APIs commonly
 publish simple per-minute and per-day quotas. Fixed window counters are simple,
 transparent, easy to test, and directly match the requirement to track request
 volume per minute and per day. 
+
 Pros:
 • Memory efficient.
 • Easy to understand.
