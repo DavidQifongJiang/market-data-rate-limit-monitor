@@ -67,6 +67,8 @@ transparent, easy to test, and directly match the requirement to track request
 volume per minute and per day. 
 
 Pros: Memory efficient.Easy to understand. Resetting available quota at the end of a unit time window fits certain use cases.
+
+
 Cons: Spike in traffic at the edges of a window could cause more requests than the allowed quota to go through.
 
 Other Algorithm's pros and cons
