@@ -55,6 +55,32 @@ If headers are missing, it uses internal counters.
 Default header names include `X-RateLimit-Remaining`, `X-RateLimit-Limit`,
 `RateLimit-Remaining`, `RateLimit-Limit`, and `Retry-After`.
 
+## Rate-Limit Algorithm
+
+This project uses a fixed window counter algorithm. The monitor keeps separate
+UTC counters for the active minute and active day, increments both counters
+before each allowed request, and resets them when their time window changes.
+
+This design was chosen because the target public market data APIs commonly
+publish simple per-minute and per-day quotas. Fixed window counters are simple,
+transparent, easy to test, and directly match the requirement to track request
+volume per minute and per day. Token bucket, leaky bucket, and sliding-window
+approaches are useful for smoother or more precise rolling-window enforcement,
+but they add complexity that is not needed for these published quota windows.
+
+Common rate-limit algorithm tradeoffs:
+
+- Token bucket: allows short bursts while enforcing an average request rate, but
+  needs token refill logic and does not directly model daily quotas on its own.
+- Leaky bucket: smooths traffic into a steady output rate, but can delay
+  requests and is less natural for simple per-minute/per-day published quotas.
+- Fixed window counter: simple, low-memory, easy to test, and directly matches
+  per-minute/per-day limits, but can allow bursts around window boundaries.
+- Sliding window log: very accurate for rolling windows because it stores each
+  request timestamp, but uses more memory and cleanup logic.
+- Sliding window counter: smoother than fixed windows and cheaper than a full
+  log, but it is approximate and more complex to explain and test.
+
 ## Alpha Vantage Example
 
 PowerShell:

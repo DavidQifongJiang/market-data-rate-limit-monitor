@@ -4,6 +4,39 @@ from typing import Sequence
 
 @dataclass(frozen=True)
 class RateLimitConfig:
+    """
+    Configuration for one market data API provider.
+
+    provider_name:
+        Human-readable provider name used in warning and error messages.
+
+    per_minute_limit:
+        Optional maximum number of requests allowed per UTC minute.
+        Use None when the provider does not publish a per-minute quota.
+
+    per_day_limit:
+        Optional maximum number of requests allowed per UTC day.
+        Use None when the provider does not publish a daily quota.
+
+    warning_threshold:
+        Usage percentage that triggers a warning log.
+        Default is 0.80, meaning 80% of the configured quota.
+
+    block_threshold:
+        Usage percentage that blocks future requests.
+        Default is 0.95, meaning 95% of the configured quota.
+
+    remaining_header_names:
+        Response header names that may contain remaining provider quota.
+
+    limit_header_names:
+        Response header names that may contain total provider quota.
+
+    retry_after_header_names:
+        Response header names that tell the client how long to wait before retrying.
+
+    __post_init__ is automatically called after the dataclass object is created. We use it to reject bad settings early.
+    """
     provider_name: str = "market-data-provider"
     per_minute_limit: int | None = None
     per_day_limit: int | None = None
