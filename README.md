@@ -64,9 +64,7 @@ before each allowed request, and resets them when their time window changes.
 This design was chosen because the target public market data APIs commonly
 publish simple per-minute and per-day quotas. Fixed window counters are simple,
 transparent, easy to test, and directly match the requirement to track request
-volume per minute and per day. Token bucket, leaky bucket, and sliding-window
-approaches are useful for smoother or more precise rolling-window enforcement,
-but they add complexity that is not needed for these published quota windows.
+volume per minute and per day. 
 
 Common rate-limit algorithm tradeoffs:
 
